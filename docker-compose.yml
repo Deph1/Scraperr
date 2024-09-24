@@ -8,8 +8,8 @@ services:
     command: ["npm", "run", "start"]
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.scraperr.rule=Host(`localhost`)" # change this to your domain, if not running on localhost
-      - "traefik.http.routers.scraperr.entrypoints=web" # websecure if using https
+      - "traefik.http.routers.scraperr.rule=Host(`localhost`)" 
+      - "traefik.http.routers.scraperr.entrypoints=web" 
       - "traefik.http.services.scraperr.loadbalancer.server.port=3000"
     networks:
       - web
@@ -23,17 +23,17 @@ services:
       - LOG_LEVEL=INFO
       - OLLAMA_URL=http://ollama:11434
       - OLLAMA_MODEL=phi3
-      - MONGODB_URI=mongodb://root:example@webscrape-mongo:27017 # used to access MongoDB
-      - SECRET_KEY=your_secret_key # used to encode authentication tokens (can be a random string)
-      - ALGORITHM=HS256 # authentication encoding algorithm
-      - ACCESS_TOKEN_EXPIRE_MINUTES=600 # access token expire minutes
+      - MONGODB_URI=mongodb://root:example@webscrape-mongo:27017 
+      - SECRET_KEY=your_secret_key
+      - ALGORITHM=HS256 
+      - ACCESS_TOKEN_EXPIRE_MINUTES=600 
     container_name: scraperr_api
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.scraperr_api.rule=Host(`localhost`) && PathPrefix(`/api`)" # change this to your domain, if not running on localhost
-      - "traefik.http.routers.scraperr_api.entrypoints=web" # websecure if using https
+      - "traefik.http.routers.scraperr_api.rule=Host(`localhost`) && PathPrefix(`/api`)" 
+      - "traefik.http.routers.scraperr_api.entrypoints=web" 
       - "traefik.http.middlewares.api-stripprefix.stripprefix.prefixes=/api"
       - "traefik.http.routers.scraperr_api.middlewares=api-stripprefix"
       - "traefik.http.services.scraperr_api.loadbalancer.server.port=8000"
